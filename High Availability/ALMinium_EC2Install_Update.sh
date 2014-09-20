@@ -1,8 +1,7 @@
 #!/bin/bash
 ALM_HOSTNAME=
 BucketName=
-AccessKey=
-SecretAccessKey=
+IAMRole=
 RDSENDNAME=
 RDSDBNAME=
 RDSUser=
@@ -14,7 +13,7 @@ SMTPPORT=
 SMTPLOGIN=
 SMTPUser=
 SMTPPass=
-s3fs_var=1.62
+s3fs_var=1.74
 ENABLE_JENKINS=y
 export USER=root
 export HOME=/root
@@ -36,8 +35,6 @@ cd /usr/local/src/s3fs-$s3fs_var/
 make
 make install
 rm -rf /usr/local/src/s3fs-$s3fs_var.tar.gz
-echo $BucketName:$AccessKey:$SecretAccessKey > /etc/passwd-s3fs
-chmod 640 /etc/passwd-s3fs
 cd /usr/local/src
 git clone https://github.com/alminium/alminium.git
 cd /usr/local/src/alminium
@@ -46,13 +43,13 @@ cat ../alminium_inst-script_rhel6_httpd-redmine.conf.patch | patch -p1
 cat ../alminium_inst-script_rhel6_post-install.patch | patch -p1
 source ./smelt > /usr/local/src/alminium/ALMinium_Install.log 2>&1
 mkdir -p /mnt/s3
-s3fs $BucketName /mnt/s3 -o allow_other -o allow_other,default_acl=public-read
+s3fs $BucketName /mnt/s3 -o allow_other -o allow_other,default_acl=public-read,iam_role=$IAMRole
 cd /mnt/s3
 rm -rf /opt/alminium/
 rm -rf /opt/alminium/files
 ln -s /mnt/s3/alminium /var/opt/alminium
 ln -s /mnt/s3/files /opt/alminium/files
-echo "/usr/bin/s3fs#$BucketName /mnt/s3 fuse allow_other,default_acl=public-read 0 0" >> /etc/fstab
+echo "/usr/bin/s3fs#$BucketName /mnt/s3 fuse allow_other,default_acl=public-read,iam_role=$IAMRole 0 0" >> /etc/fstab
 echo -e "production-sqlite:
   adapter: sqlite3
   database: db/alminium.sqlite3
