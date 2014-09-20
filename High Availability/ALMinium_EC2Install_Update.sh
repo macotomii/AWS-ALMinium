@@ -1,6 +1,7 @@
 #!/bin/bash
 ALM_HOSTNAME=
 BucketName=
+IAMRole=
 RDSENDNAME=
 RDSDBNAME=
 RDSUser=
@@ -42,13 +43,13 @@ cat ../alminium_inst-script_rhel6_httpd-redmine.conf.patch | patch -p1
 cat ../alminium_inst-script_rhel6_post-install.patch | patch -p1
 source ./smelt > /usr/local/src/alminium/ALMinium_Install.log 2>&1
 mkdir -p /mnt/s3
-s3fs $BucketName /mnt/s3 -o allow_other -o allow_other,default_acl=public-read
+s3fs $BucketName /mnt/s3 -o allow_other -o allow_other,default_acl=public-read,iam_role=$IAMRole
 cd /mnt/s3
 rm -rf /opt/alminium/
 rm -rf /opt/alminium/files
 ln -s /mnt/s3/alminium /var/opt/alminium
 ln -s /mnt/s3/files /opt/alminium/files
-echo "/usr/bin/s3fs#$BucketName /mnt/s3 fuse allow_other,default_acl=public-read 0 0" >> /etc/fstab
+echo "/usr/bin/s3fs#$BucketName /mnt/s3 fuse allow_other,default_acl=public-read,iam_role=$IAMRole 0 0" >> /etc/fstab
 echo -e "production-sqlite:
   adapter: sqlite3
   database: db/alminium.sqlite3
