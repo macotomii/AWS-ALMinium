@@ -1,0 +1,14 @@
+diff --git a/inst-script/rhel6/post-install b/inst-script/rhel6/post-install
+index 19c6980..f5f7b27 100644
+--- a/inst-script/rhel6/post-install
++++ b/inst-script/rhel6/post-install
+@@ -9,7 +9,9 @@ fi
+ if [ ! -f /etc/httpd/conf.d/redmine.conf ]
+ then
+   PASSENGER_VERSION=`passenger-config  --version`
++  GEM_INSTALLATION_DIRECTORY=`gem env | grep 'INSTALLATION DIRECTORY' | sed 's/^  - INSTALLATION DIRECTORY: //'`
+   sed 's/%HOSTNAME%/'$HOSTNAME'/' inst-script/rhel6/httpd-redmine.conf | \
++      sed 's|%GEM_INSTALLATION_DIRECTORY%|'$GEM_INSTALLATION_DIRECTORY'|' | \
+       sed 's/%PASSENGER_VERSION%/'$PASSENGER_VERSION'/' |
+ 	  if [ "$SSL" = "y" ]
+ 	  then

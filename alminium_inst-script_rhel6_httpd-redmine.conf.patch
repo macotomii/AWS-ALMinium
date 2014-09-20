@@ -1,0 +1,12 @@
+diff --git a/inst-script/rhel6/httpd-redmine.conf b/inst-script/rhel6/httpd-redmine.conf
+index a4525b0..d22b6a9 100644
+--- a/inst-script/rhel6/httpd-redmine.conf
++++ b/inst-script/rhel6/httpd-redmine.conf
+@@ -1,5 +1,5 @@
+-LoadModule passenger_module /usr/lib64/ruby/gems/2.1.0/gems/passenger-%PASSENGER_VERSION%/buildout/apache2/mod_passenger.so
+-PassengerRoot /usr/lib64/ruby/gems/2.1.0/gems/passenger-%PASSENGER_VERSION%
++LoadModule passenger_module %GEM_INSTALLATION_DIRECTORY%/gems/passenger-%PASSENGER_VERSION%/buildout/apache2/mod_passenger.so
++PassengerRoot %GEM_INSTALLATION_DIRECTORY%/gems/passenger-%PASSENGER_VERSION%
+ PassengerRuby /usr/bin/ruby
+
+ <VirtualHost *:80>
