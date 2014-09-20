@@ -1,8 +1,6 @@
 #!/bin/bash
 ALM_HOSTNAME=
 BucketName=
-AccessKey=
-SecretAccessKey=
 RDSENDNAME=
 RDSDBNAME=
 RDSUser=
@@ -36,8 +34,6 @@ cd /usr/local/src/s3fs-$s3fs_var/
 make
 make install
 rm -rf /usr/local/src/s3fs-$s3fs_var.tar.gz
-echo $BucketName:$AccessKey:$SecretAccessKey > /etc/passwd-s3fs
-chmod 640 /etc/passwd-s3fs
 cd /usr/local/src
 git clone https://github.com/alminium/alminium.git
 cd /usr/local/src/alminium
