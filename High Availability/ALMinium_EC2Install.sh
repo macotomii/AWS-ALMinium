@@ -22,6 +22,8 @@ SSL=N
 USE_DISABLE_SECURITY=N
 yum -y install ruby19 ruby19-devel rubygems19 rubygems19-devel
 alternatives --set ruby /usr/bin/ruby1.9
+gem install rubygems-update
+update_rubygems
 yum -y install subversion make automake gcc libstdc++-devel gcc-c++ fuse fuse-devel curl-devel curl-devel libxml2-devel openssl-devel mailcap
 yum -y install git
 cd /usr/local/src
