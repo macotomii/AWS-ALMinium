@@ -11,7 +11,7 @@ ENABLE_JENKINS=y
 export USER=root
 export HOME=/root
 SSL=y
-USE_DISABLE_SECURITY=Y
+USE_DISABLE_SECURITY=N
 yum -y install git
 cd /usr/local/src
 git clone https://github.com/alminium/alminium.git

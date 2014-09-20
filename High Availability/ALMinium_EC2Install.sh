@@ -19,7 +19,7 @@ ENABLE_JENKINS=y
 export USER=root
 export HOME=/root
 SSL=N
-USE_DISABLE_SECURITY=Y
+USE_DISABLE_SECURITY=N
 yum -y install subversion make automake gcc libstdc++-devel gcc-c++ fuse fuse-devel curl-devel curl-devel libxml2-devel openssl-devel mailcap
 yum -y install git
 cd /usr/local/src
