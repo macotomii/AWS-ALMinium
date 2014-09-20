@@ -22,5 +22,8 @@ yum -y install git
 cd /usr/local/src
 git clone https://github.com/alminium/alminium.git
 cd alminium
+yum -y install patch
+cat ../alminium_inst-script_rhel6_httpd-redmine.conf.patch | patch -p1
+cat ../alminium_inst-script_rhel6_post-install.patch | patch -p1
 source ./smelt > /usr/local/src/alminium/ALMinium_Install.log 2>&1
 reboot
